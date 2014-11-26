@@ -36,6 +36,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,6 +63,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EndpointVM.cs" />
+    <Compile Include="DeleteVM.cs" />
+    <Compile Include="GetByIdVM.cs" />
+    <Compile Include="UpdateVM.cs" />
+    <Compile Include="InsertVM.cs" />
+    <Compile Include="MainVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -94,10 +102,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\TodoManager\Shared\Shared.csproj">
+      <Project>{f56e48ce-488e-4f13-b805-1628d9bf08a0}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RestClient\RestClientLib.csproj">
       <Project>{034774b7-ebfc-4b10-970a-a235a44da2b7}</Project>
       <Name>RestClientLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

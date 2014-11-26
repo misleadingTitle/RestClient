@@ -63,7 +63,7 @@ namespace RestClientLib
             request.ContentLength = 0;
             request.ContentType = ContentType;
 
-            if (!string.IsNullOrEmpty(PostData) && Method == HttpVerb.POST)
+            if (!string.IsNullOrEmpty(PostData) && (Method == HttpVerb.POST || Method == HttpVerb.PUT))
             {
                 var encoding = new UTF8Encoding();
                 var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(PostData);
