@@ -20,6 +20,17 @@ namespace WpfClient
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private string _lastResponse;
+        public string LastResponse
+        {
+            get { return _lastResponse; }
+            set
+            {
+                this._lastResponse = value;
+                OnPropertyChanged("LastResponse");
+            }
+        }
+
         private string _endpoint;
         public string Endpoint
         {

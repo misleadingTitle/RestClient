@@ -31,13 +31,15 @@ namespace WpfClient
             }
         }
 
-        internal void goForIt()
+        internal void goForIt(string Token)
         {
             var client = new RestClient();
             client.EndPoint = this.Endpoint+this.Method;
             client.Method = HttpVerb.GET;
             client.ContentType = "xml";
-
+            //TOKEN!!!!!!
+            string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+            client.Token = headerValue;
             var result = client.MakeRequest();
             DataContractSerializer serializer = new DataContractSerializer(typeof(List<Article>));
             XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new MemoryStream(Encoding.UTF8.GetBytes(result)), new XmlDictionaryReaderQuotas());

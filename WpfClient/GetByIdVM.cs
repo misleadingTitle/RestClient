@@ -18,12 +18,15 @@ namespace WpfClient
         {
             this.Method = webMethod;
         }
-        internal Article goForIt(Article sel)
+        internal Article goForIt(Article sel, string Token)
         {
             var client = new RestClient();
             client.EndPoint = this.Endpoint+this.Method;
             client.Method = HttpVerb.GET;
             client.ContentType = "xml";
+            //TOKEN!!!!!!
+            string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+            client.Token = headerValue;
 
             var result = client.MakeRequest(sel.Id);
             DataContractSerializer serializer = new DataContractSerializer(typeof(Article));

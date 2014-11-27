@@ -43,14 +43,16 @@ namespace WpfClient
             }
         }
 
-        internal void goForIt()
+        internal void goForIt(string Token)
         {
             var client = new RestClient();
             client.EndPoint = this.Endpoint + this.Method;
             client.Method = HttpVerb.POST;
             client.ContentType = "application/json";
 
-
+            //TOKEN!!!!!!
+            string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+            client.Token=headerValue;
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Article));
             var writerStream =new MemoryStream();

@@ -43,12 +43,13 @@ namespace WpfClient
             }
         }
 
-        internal void goForIt()
+        internal void goForIt(string Token)
         {
             var client = new RestClient();
             client.EndPoint = this.Endpoint + this.Method;
             client.Method = HttpVerb.PUT;
             client.ContentType = "application/json";
+            client.Token = Token;
 
 
 

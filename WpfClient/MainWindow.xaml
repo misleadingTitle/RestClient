@@ -49,7 +49,7 @@
                             <TextBox Name="txtUsername" Width="300"></TextBox>
                             <TextBox Name="txtPWD" Width="300"></TextBox>
                         </StackPanel>
-                        <Button Name="btnLogin">Request token</Button>
+                        <Button Name="btnLogin" Click="btnLogin_Click">Request token</Button>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
@@ -69,7 +69,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Width="100">Body</Label>
-                            <TextBox Name="GetBody" AcceptsReturn="True" Height="300" Width="500"></TextBox>
+                            <TextBox Name="GetBody" TextWrapping="Wrap" AcceptsReturn="True" Height="300" Width="500"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox Name="GetIsPublished">IsPublished</CheckBox>
@@ -98,7 +98,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Width="100">Body</Label>
-                            <TextBox Name="Body" AcceptsReturn="True" Height="300" Width="500"></TextBox>
+                            <TextBox Name="Body" TextWrapping="Wrap" AcceptsReturn="True" Height="300" Width="500"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox Name="IsPublished">IsPublished</CheckBox>
@@ -129,7 +129,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label Width="100">Body</Label>
-                            <TextBox Name="UpdBody" AcceptsReturn="True" Height="300" Width="500"></TextBox>
+                            <TextBox Name="UpdBody" TextWrapping="Wrap" AcceptsReturn="True" Height="300" Width="500"></TextBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <CheckBox Name="UpdIsPublished">IsPublished</CheckBox>

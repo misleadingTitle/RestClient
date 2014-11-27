@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -12,8 +13,9 @@ public enum HttpVerb
 }
 namespace RestClientLib
 {
-    public class RestClient
+    public class RestClient:INotifyPropertyChanged
     {
+        public string Token { get; set; }
         public string EndPoint { get; set; }
         public HttpVerb Method { get; set; }
         public string ContentType { get; set; }
@@ -63,6 +65,11 @@ namespace RestClientLib
             request.ContentLength = 0;
             request.ContentType = ContentType;
 
+            if (Token!=null)
+            {
+                request.Headers.Add("Authorization", Token);
+            }
+
             if (!string.IsNullOrEmpty(PostData) && (Method == HttpVerb.POST || Method == HttpVerb.PUT))
             {
                 var encoding = new UTF8Encoding();
@@ -74,31 +81,49 @@ namespace RestClientLib
                     writeStream.Write(bytes, 0, bytes.Length);
                 }
             }
-
-            using (var response = (HttpWebResponse)request.GetResponse())
+            try
             {
-                var responseValue = string.Empty;
-
-                if (response.StatusCode != HttpStatusCode.OK)
+                using (var response = (HttpWebResponse)request.GetResponse())
                 {
-                    var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
-                    throw new ApplicationException(message);
-                }
+                    var responseValue = string.Empty;
 
-                // grab the response
-                using (var responseStream = response.GetResponseStream())
-                {
-                    if (responseStream != null)
-                        using (var reader = new StreamReader(responseStream))
-                        {
-                            responseValue = reader.ReadToEnd();
-                        }
-                }
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
+                        throw new ApplicationException(message);
+                    }
 
-                return responseValue;
+                    // grab the response
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        if (responseStream != null)
+                            using (var reader = new StreamReader(responseStream))
+                            {
+                                responseValue = reader.ReadToEnd();
+                            }
+                    }
+
+                    return responseValue;
+                }
+            }
+            catch (WebException ex)
+            {
+                return ex.Response.Headers.ToString();
             }
         }
 
+        // Create the OnPropertyChanged method to raise the event 
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        
     } // class
 
 }

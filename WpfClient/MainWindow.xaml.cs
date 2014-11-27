@@ -26,6 +26,7 @@ namespace WpfClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        string Token = null;
         MainVM getArticleListVM;
         public MainWindow()
         {
@@ -37,7 +38,7 @@ namespace WpfClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            getArticleListVM.goForIt();
+            getArticleListVM.goForIt(Token);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -54,7 +55,7 @@ namespace WpfClient
                 IsDeleted = false,
                 IsPublished = IsPublished.IsChecked
             };
-            insert.goForIt();
+            insert.goForIt(Token);
             txtoutput.Text = insert.Id;
         }
 
@@ -72,7 +73,7 @@ namespace WpfClient
         {
             var specific = new GetByIdVM();
             specific.Endpoint = txtendpoint.Text;
-            Article result = specific.goForIt((Article)lstArticles.SelectedItem);
+            Article result = specific.goForIt((Article)lstArticles.SelectedItem, Token);
             GetAbstract.Text = result.Abstract;
             GetCategory.Text = result.Category;
             GetBody.Text = result.Body;
@@ -84,7 +85,7 @@ namespace WpfClient
         {
             var delete = new DeleteVM();
             delete.Endpoint = txtendpoint.Text;
-            delete.goForIt((Article)lstArticles.SelectedItem);
+            delete.goForIt((Article)lstArticles.SelectedItem,Token);
         }
 
         private void lstArticles_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -115,8 +116,18 @@ namespace WpfClient
                 IsDeleted = false,
                 IsPublished = UpdIsPublished.IsChecked
             };
-            update.goForIt();
+            update.goForIt(Token);
             txtoutput.Text = update.Id;
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            string serviceNamespace = "restfulproject";
+            string acsHostUrl = "accesscontrol.windows.net";
+            string realm = @"http://k31:57614/NewsRESTService.svc";
+            string uid = "prova";
+            string pwd = "prova";
+            Token = RestClientLib.GetToken.GetTokenFromACS(realm, serviceNamespace, acsHostUrl, uid, pwd);
         }
     }
 }
