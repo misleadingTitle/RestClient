@@ -35,11 +35,20 @@
                     </ListView>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="HTTP Response" Padding="5">
-                <StackPanel>
-                    <TextBox Name="txtReturnCode" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True">ReturnCode</TextBox>
-                    <TextBox Name="txtoutput" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True" Height="150">Output...</TextBox>
-                </StackPanel>
+            <GroupBox Header="HTTP" Padding="5">
+                <TabControl >
+                    <TabItem Header="HTTPRequest">
+                        <StackPanel>
+                            <TextBox Name="txtsended" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" Height="169">Request...</TextBox>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="HTTPResponse">
+                        <StackPanel>
+                            <TextBox Name="txtReturnCode" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True">ReturnCode</TextBox>
+                            <TextBox Name="txtoutput" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" Height="150">Output...</TextBox>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
             </GroupBox>
             <GroupBox Header="ACS" Padding="5">
                 <StackPanel>
@@ -49,7 +58,10 @@
                             <TextBox Name="txtUsername" Width="300"></TextBox>
                             <TextBox Name="txtPWD" Width="300"></TextBox>
                         </StackPanel>
-                        <Button Name="btnLogin" Click="btnLogin_Click">Request token</Button>
+                        <StackPanel>
+                            <Button Name="btnDispose" Click="btnDispose_Click">Dispose token</Button>
+                            <Button Name="btnLogin" Click="btnLogin_Click">Request token</Button>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

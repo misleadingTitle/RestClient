@@ -39,6 +39,7 @@ namespace WpfClient
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             getArticleListVM.goForIt(Token);
+            setWebResponseRequest(getArticleListVM);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -56,7 +57,15 @@ namespace WpfClient
                 IsPublished = IsPublished.IsChecked
             };
             insert.goForIt(Token);
-            txtoutput.Text = insert.Id;
+            //txtoutput.Text = insert.Id;
+            setWebResponseRequest(insert);
+        }
+
+        private void setWebResponseRequest(EndpointVM wc)
+        {
+            this.txtsended.Text = wc.LastResponse;
+            this.txtoutput.Text = wc.LastRequest;
+            this.txtReturnCode.Text = wc.LastRequestCode;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -128,6 +137,11 @@ namespace WpfClient
             string uid = "prova";
             string pwd = "prova";
             Token = RestClientLib.GetToken.GetTokenFromACS(realm, serviceNamespace, acsHostUrl, uid, pwd);
+        }
+
+        private void btnDispose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Token = String.Empty;
         }
     }
 }

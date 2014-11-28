@@ -63,6 +63,7 @@ namespace WpfClient
             rd.BaseStream.Position = 0;
             client.PostData=rd.ReadToEnd();
             var result = client.MakeRequest(this.ArticleUpd.Id);
+            setResponseRequest(client);
             Id = result;
         }
     }

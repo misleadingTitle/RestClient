@@ -18,9 +18,9 @@ namespace WpfClient
         {
             this.Method = webMethod;
         }
-        internal string goForIt(Article sel,string Token)
+        internal string goForIt(Article sel, string Token)
         {
-            string games="";
+            string games = "";
             if (sel != null)
             {
                 var client = new RestClient();
@@ -28,15 +28,16 @@ namespace WpfClient
                 client.Method = HttpVerb.DELETE;
                 client.ContentType = "xml";
                 //TOKEN!!!!!!
-                string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
-                client.Token = headerValue;
-
+                if (!String.IsNullOrEmpty(Token))
+                {
+                    string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+                    client.Token = headerValue;
+                }
                 var result = client.MakeRequest(sel.Id);
-                DataContractSerializer serializer = new DataContractSerializer(typeof(String));
-                XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new MemoryStream(Encoding.UTF8.GetBytes(result)), new XmlDictionaryReaderQuotas());
-
-                games = (string)serializer.ReadObject(reader);
+                setResponseRequest(client);
+                games = result;
             }
+
             return games;
         }
     }

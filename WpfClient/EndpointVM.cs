@@ -31,6 +31,28 @@ namespace WpfClient
             }
         }
 
+        private string _lastRequest;
+        public string LastRequest
+        {
+            get { return _lastRequest; }
+            set
+            {
+                this._lastRequest = value;
+                OnPropertyChanged("LastRequest");
+            }
+        }
+
+        private string _lastRequestCode;
+        public string LastRequestCode
+        {
+            get { return _lastRequestCode; }
+            set
+            {
+                this._lastRequestCode = value;
+                OnPropertyChanged("LastRequestCode");
+            }
+        }
+
         private string _endpoint;
         public string Endpoint
         {
@@ -51,6 +73,13 @@ namespace WpfClient
                 this._method = value;
                 OnPropertyChanged("Method");
             }
+        }
+
+        protected void setResponseRequest(RestClientLib.RestClient client)
+        {
+            this.LastRequest = client.Request;
+            this.LastResponse = client.Response;
+            this.LastRequestCode = client.ResponseCode;
         }
     }
 }

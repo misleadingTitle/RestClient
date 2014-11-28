@@ -13,13 +13,22 @@ public enum HttpVerb
 }
 namespace RestClientLib
 {
-    public class RestClient:INotifyPropertyChanged
+    public class RestClient : INotifyPropertyChanged
     {
         public string Token { get; set; }
         public string EndPoint { get; set; }
         public HttpVerb Method { get; set; }
         public string ContentType { get; set; }
         public string PostData { get; set; }
+
+        private string _request;
+        public string Request { get { return _request; } }
+
+        private string _response;
+        public string Response { get { return _response; } }
+
+        private string _responseCode;
+        public string ResponseCode { get { return _responseCode; } }
 
         public RestClient()
         {
@@ -65,7 +74,7 @@ namespace RestClientLib
             request.ContentLength = 0;
             request.ContentType = ContentType;
 
-            if (Token!=null)
+            if (!String.IsNullOrEmpty(Token))
             {
                 request.Headers.Add("Authorization", Token);
             }
@@ -81,10 +90,13 @@ namespace RestClientLib
                     writeStream.Write(bytes, 0, bytes.Length);
                 }
             }
+            this._request = request.Headers.ToString();
             try
             {
                 using (var response = (HttpWebResponse)request.GetResponse())
                 {
+                    this._response = response.Headers.ToString();
+                    this._responseCode = response.StatusCode.ToString();
                     var responseValue = string.Empty;
 
                     if (response.StatusCode != HttpStatusCode.OK)
@@ -108,7 +120,17 @@ namespace RestClientLib
             }
             catch (WebException ex)
             {
-                return ex.Response.Headers.ToString();
+                if (ex.Response != null)
+                {
+                    this._response = ex.Response.Headers.ToString();
+                    this._responseCode = ((HttpWebResponse)ex.Response).StatusCode + ((HttpWebResponse)ex.Response).StatusDescription;
+                }
+                else
+                {
+                    this._response = "null";
+                    this._responseCode = "null";
+                }
+                return "";
             }
         }
 
@@ -123,7 +145,7 @@ namespace RestClientLib
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        
+
     } // class
 
 }

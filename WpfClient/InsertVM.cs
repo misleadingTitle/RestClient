@@ -51,8 +51,11 @@ namespace WpfClient
             client.ContentType = "application/json";
 
             //TOKEN!!!!!!
-            string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
-            client.Token=headerValue;
+            if (!String.IsNullOrEmpty(Token))
+            {
+                string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+                client.Token = headerValue;
+            }
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Article));
             var writerStream =new MemoryStream();
@@ -64,6 +67,7 @@ namespace WpfClient
             rd.BaseStream.Position = 0;
             client.PostData=rd.ReadToEnd();
             var result = client.MakeRequest(this.ArticleIns.Id);
+            setResponseRequest(client);
             Id = result;
         }
     }

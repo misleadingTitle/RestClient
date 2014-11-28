@@ -25,15 +25,33 @@ namespace WpfClient
             client.Method = HttpVerb.GET;
             client.ContentType = "xml";
             //TOKEN!!!!!!
-            string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
-            client.Token = headerValue;
+            if (!String.IsNullOrEmpty(Token))
+            {
+                string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+                client.Token = headerValue;
+            }
 
             var result = client.MakeRequest(sel.Id);
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Article));
-            XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new MemoryStream(Encoding.UTF8.GetBytes(result)), new XmlDictionaryReaderQuotas());
+            setResponseRequest(client);
+            try
+            {
+                if (!String.IsNullOrEmpty(result))
+                {
+                    DataContractSerializer serializer = new DataContractSerializer(typeof(Article));
+                    XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new MemoryStream(Encoding.UTF8.GetBytes(result)), new XmlDictionaryReaderQuotas());
 
-            var games = serializer.ReadObject(reader);
-            return (Article)games;
+                    var games = serializer.ReadObject(reader);
+                    return (Article)games;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
