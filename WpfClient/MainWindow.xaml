@@ -39,20 +39,27 @@
                 <TabControl >
                     <TabItem Header="HTTPRequest">
                         <StackPanel>
-                            <TextBox Name="txtsended" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" Height="169">Request...</TextBox>
+                            <TextBox Name="txtsended" IsReadOnly="True" 
+                                         AcceptsReturn="True" TextWrapping="Wrap" Height="169"
+                                         Width="350"
+                                         Background="LightBlue">Request...</TextBox>
                         </StackPanel>
                     </TabItem>
                     <TabItem Header="HTTPResponse">
                         <StackPanel>
-                            <TextBox Name="txtReturnCode" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True">ReturnCode</TextBox>
-                            <TextBox Name="txtoutput" IsEnabled="False" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" Height="150">Output...</TextBox>
+                            <TextBox Name="txtReturnCode"  IsReadOnly="True" AcceptsReturn="True">ReturnCode</TextBox>
+                            <TextBox Name="txtoutput" 
+                                     Width="350"
+                                     IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" 
+                                     Height="150"
+                                     Background="LightBlue">Output...</TextBox>
                         </StackPanel>
                     </TabItem>
                 </TabControl>
             </GroupBox>
             <GroupBox Header="ACS" Padding="5">
                 <StackPanel>
-                    <TextBox Name="txtTokenDisplay" Width="Auto" Padding="2" Height="150" AcceptsReturn="True" IsEnabled="False" IsReadOnly="True" >Token...</TextBox>
+                    <TextBox Name="txtTokenDisplay" TextWrapping="Wrap" Width="375" Background="LightBlue"  Padding="2" Height="150" AcceptsReturn="True" IsReadOnly="True" >Token...</TextBox>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel>
                             <TextBox Name="txtUsername" Width="300"></TextBox>

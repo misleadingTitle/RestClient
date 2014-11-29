@@ -24,12 +24,12 @@ namespace RestClientLib
             // request a token from ACS
             WebClient client = new WebClient();
 
-            //PROXY!!!!
-            WebProxy p = new WebProxy("10.173.201.11:3128", true);
-            p.Credentials = new NetworkCredential("manuel minuti", "password");
-            WebRequest.DefaultWebProxy = p;
-            client.Proxy = p;
-            //
+            //--------------PROXY!!!!
+            //WebProxy p = new WebProxy("10.173.201.11:3128", true);
+            //p.Credentials = new NetworkCredential("manuel minuti", "password");
+            //WebRequest.DefaultWebProxy = p;
+            //client.Proxy = p;
+            //-----------------------
             client.BaseAddress = string.Format("https://{0}.{1}", serviceNamespace, acsHostUrl);
 
             NameValueCollection values = new NameValueCollection();

@@ -63,9 +63,17 @@ namespace WpfClient
 
         private void setWebResponseRequest(EndpointVM wc)
         {
-            this.txtsended.Text = wc.LastResponse;
-            this.txtoutput.Text = wc.LastRequest;
+            this.txtsended.Text = System.Uri.UnescapeDataString(wc.LastRequest);
+            this.txtoutput.Text = System.Uri.UnescapeDataString(wc.LastResponse);
             this.txtReturnCode.Text = wc.LastRequestCode;
+            if(!String.IsNullOrEmpty(Token))
+            {
+                this.txtTokenDisplay.Text = System.Uri.UnescapeDataString(Token);
+            }
+            else
+            {
+                this.txtTokenDisplay.Text = "No token";
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -82,12 +90,15 @@ namespace WpfClient
         {
             var specific = new GetByIdVM();
             specific.Endpoint = txtendpoint.Text;
-            Article result = specific.goForIt((Article)lstArticles.SelectedItem, Token);
-            GetAbstract.Text = result.Abstract;
-            GetCategory.Text = result.Category;
-            GetBody.Text = result.Body;
-            GetIsPublished.IsChecked = result.IsPublished;
-            GetIsDeleted.IsChecked = result.IsDeleted;
+            if ((Article)lstArticles.SelectedItem != null)
+            {
+                Article result = specific.goForIt((Article)lstArticles.SelectedItem, Token);
+                GetAbstract.Text = result.Abstract;
+                GetCategory.Text = result.Category;
+                GetBody.Text = result.Body;
+                GetIsPublished.IsChecked = result.IsPublished;
+                GetIsDeleted.IsChecked = result.IsDeleted;
+            }
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -137,11 +148,13 @@ namespace WpfClient
             string uid = "prova";
             string pwd = "prova";
             Token = RestClientLib.GetToken.GetTokenFromACS(realm, serviceNamespace, acsHostUrl, uid, pwd);
+            this.txtTokenDisplay.Text = System.Uri.UnescapeDataString(Token);
         }
 
         private void btnDispose_Click(object sender, RoutedEventArgs e)
         {
             this.Token = String.Empty;
+            this.txtTokenDisplay.Text = "";
         }
     }
 }

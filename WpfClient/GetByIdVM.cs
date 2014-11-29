@@ -20,38 +20,38 @@ namespace WpfClient
         }
         internal Article goForIt(Article sel, string Token)
         {
-            var client = new RestClient();
-            client.EndPoint = this.Endpoint+this.Method;
-            client.Method = HttpVerb.GET;
-            client.ContentType = "xml";
-            //TOKEN!!!!!!
-            if (!String.IsNullOrEmpty(Token))
-            {
-                string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
-                client.Token = headerValue;
-            }
-
-            var result = client.MakeRequest(sel.Id);
-            setResponseRequest(client);
-            try
-            {
-                if (!String.IsNullOrEmpty(result))
+                var client = new RestClient();
+                client.EndPoint = this.Endpoint + this.Method;
+                client.Method = HttpVerb.GET;
+                client.ContentType = "xml";
+                //TOKEN!!!!!!
+                if (!String.IsNullOrEmpty(Token))
                 {
-                    DataContractSerializer serializer = new DataContractSerializer(typeof(Article));
-                    XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new MemoryStream(Encoding.UTF8.GetBytes(result)), new XmlDictionaryReaderQuotas());
-
-                    var games = serializer.ReadObject(reader);
-                    return (Article)games;
+                    string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+                    client.Token = headerValue;
                 }
-                else
+
+                var result = client.MakeRequest(sel.Id);
+                setResponseRequest(client);
+                try
+                {
+                    if (!String.IsNullOrEmpty(result))
+                    {
+                        DataContractSerializer serializer = new DataContractSerializer(typeof(Article));
+                        XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(new MemoryStream(Encoding.UTF8.GetBytes(result)), new XmlDictionaryReaderQuotas());
+
+                        var games = serializer.ReadObject(reader);
+                        return (Article)games;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception)
                 {
                     return null;
                 }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
         }
     }
 }

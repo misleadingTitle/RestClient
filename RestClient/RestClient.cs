@@ -123,7 +123,7 @@ namespace RestClientLib
                 if (ex.Response != null)
                 {
                     this._response = ex.Response.Headers.ToString();
-                    this._responseCode = ((HttpWebResponse)ex.Response).StatusCode + ((HttpWebResponse)ex.Response).StatusDescription;
+                    this._responseCode = ((int)((HttpWebResponse)ex.Response).StatusCode).ToString()+ ' ' + ((HttpWebResponse)ex.Response).StatusCode.ToString();
                 }
                 else
                 {
