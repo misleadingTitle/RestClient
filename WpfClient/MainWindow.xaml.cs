@@ -145,8 +145,8 @@ namespace WpfClient
             string serviceNamespace = "restfulproject";
             string acsHostUrl = "accesscontrol.windows.net";
             string realm = @"http://k31:57614/NewsRESTService.svc";
-            string uid = "prova";
-            string pwd = "prova";
+            string uid = txtUsername.Text;
+            string pwd = txtPWD.Text;
             Token = RestClientLib.GetToken.GetTokenFromACS(realm, serviceNamespace, acsHostUrl, uid, pwd);
             this.txtTokenDisplay.Text = System.Uri.UnescapeDataString(Token);
         }
