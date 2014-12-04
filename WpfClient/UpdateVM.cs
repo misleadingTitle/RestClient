@@ -49,7 +49,11 @@ namespace WpfClient
             client.EndPoint = this.Endpoint + this.Method;
             client.Method = HttpVerb.PUT;
             client.ContentType = "application/json";
-            client.Token = Token;
+            if (!String.IsNullOrEmpty(Token))
+            {
+                string headerValue = string.Format("WRAP access_token=\"{0}\"", Token);
+                client.Token = headerValue;
+            }
 
 
 

@@ -38,6 +38,7 @@ namespace WpfClient
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            getArticleListVM.Endpoint = txtendpoint.Text;
             getArticleListVM.goForIt(Token);
             setWebResponseRequest(getArticleListVM);
         }
@@ -99,6 +100,7 @@ namespace WpfClient
                 GetIsPublished.IsChecked = result.IsPublished;
                 GetIsDeleted.IsChecked = result.IsDeleted;
             }
+            setWebResponseRequest(specific);
         }
 
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -106,6 +108,7 @@ namespace WpfClient
             var delete = new DeleteVM();
             delete.Endpoint = txtendpoint.Text;
             delete.goForIt((Article)lstArticles.SelectedItem,Token);
+            setWebResponseRequest(delete);
         }
 
         private void lstArticles_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,7 +140,8 @@ namespace WpfClient
                 IsPublished = UpdIsPublished.IsChecked
             };
             update.goForIt(Token);
-            txtoutput.Text = update.Id;
+            setWebResponseRequest(update);
+            //txtoutput.Text = update.Id;
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
